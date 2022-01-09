@@ -1,4 +1,4 @@
-#include "led2.h"
+#include "led.h"
 #include "temp.h"
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
@@ -41,12 +41,16 @@ void setup()
     sensors.requestTemperatures(); // Send the command to get temperature readings
     temp = sensors.getTempCByIndex(0);
     Serial.println(temp);
-    //DateTime now = rtc.now();
+    DateTime now = rtc.now();
     Serial.print("hour   ");
-    Serial.print(2);
+    Serial.print(now.hour());
     Serial.print(" : ");
-    Serial.println(3);
-    delay(500);
+    Serial.println(now.minute());
+
+    displayNumber(5, 0); // Blank
+    displayNumber(2, 1);
+    displayNumber(3, 2);
+    displayNumber(4, 3);
 }
 
 void loop()
@@ -77,12 +81,12 @@ void loop()
             byte s1 = now.second() / 10;
             byte s2 = now.second() % 10;
             if (h1 > 0)
-                printNumber(h1, 0);
+                displayNumber(h1, 0);
             else
-                printNumber(10, 0); // Blank
-            printNumber(h2, 1);
-            printNumber(m1, 2);
-            printNumber(m2, 3);
+                displayNumber(10, 0); // Blank
+            displayNumber(h2, 1);
+            displayNumber(m1, 2);
+            displayNumber(m2, 3);
             displayDots(1);
             FastLED.show();
         }
@@ -97,17 +101,17 @@ void loop()
             byte h2 = abs(temp % 10);
 
             if (h1 > 0)
-                printNumber(h1, 1);
+                displayNumber(h1, 1);
             else
-                printNumber(10, 1); // Blank
+                displayNumber(10, 1); // Blank
             if (temp < 0 && h1 <= 0)
             {
-                printNumber(14, 1);
+                displayNumber(14, 1);
             }
             else if (temp < 0 && h1 > 0)
-                printNumber(14, 0);
-            printNumber(h2, 2);
-            printNumber(12, 3);
+                displayNumber(14, 0);
+            displayNumber(h2, 2);
+            displayNumber(12, 3);
             displayDots(0);
             FastLED.show();
             sensors.requestTemperatures(); // Send the command to get temperature readings
