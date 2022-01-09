@@ -5,3 +5,4 @@ arduino nano
 time module rtc1307
 temperature sensor DS18B20
 GPS module GY-NEO6MV2
+adress led strip WS2812B
